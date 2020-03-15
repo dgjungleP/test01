@@ -17,9 +17,9 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>archives </title>
-    <link href="http://abc.16home.top/2020/03/14/archives/index/"/>
-    <id>http://abc.16home.top/2020/03/14/archives/index/</id>
+    <title>Archives </title>
+    <link href="http://abc.16home.top/archives/index/"/>
+    <id>http://abc.16home.top/archives/index/</id>
     <published>2020-03-14T15:10:43.000Z</published>
     <updated>2020-03-14T15:15:57.331Z</updated>
     
@@ -32,9 +32,9 @@
   </entry>
   
   <entry>
-    <title>categories </title>
-    <link href="http://abc.16home.top/2020/03/14/categories/index/"/>
-    <id>http://abc.16home.top/2020/03/14/categories/index/</id>
+    <title>Categories </title>
+    <link href="http://abc.16home.top/categories/index/"/>
+    <id>http://abc.16home.top/categories/index/</id>
     <published>2020-03-14T15:10:42.000Z</published>
     <updated>2020-03-14T15:15:57.383Z</updated>
     
@@ -47,9 +47,9 @@
   </entry>
   
   <entry>
-    <title>tags </title>
-    <link href="http://abc.16home.top/2020/03/14/tags/index/"/>
-    <id>http://abc.16home.top/2020/03/14/tags/index/</id>
+    <title>Tags </title>
+    <link href="http://abc.16home.top/tags/index/"/>
+    <id>http://abc.16home.top/tags/index/</id>
     <published>2020-03-14T15:10:42.000Z</published>
     <updated>2020-03-14T15:15:57.666Z</updated>
     
@@ -63,8 +63,8 @@
   
   <entry>
     <title>与我有关</title>
-    <link href="http://abc.16home.top/2020/03/14/about/me/"/>
-    <id>http://abc.16home.top/2020/03/14/about/me/</id>
+    <link href="http://abc.16home.top/about/me/"/>
+    <id>http://abc.16home.top/about/me/</id>
     <published>2020-03-14T14:04:47.000Z</published>
     <updated>2020-03-14T14:04:47.427Z</updated>
     
@@ -78,8 +78,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://abc.16home.top/2020/03/11/hello-world/"/>
-    <id>http://abc.16home.top/2020/03/11/hello-world/</id>
+    <link href="http://abc.16home.top/hello-world/"/>
+    <id>http://abc.16home.top/hello-world/</id>
     <published>2020-03-11T15:02:42.785Z</published>
     <updated>2020-03-11T15:02:42.785Z</updated>
     
