@@ -72,10 +72,12 @@
 <p>转载于<a href="https://www.jianshu.com/p/6db623355e11" target="_blank" rel="noopener">SpringBoot基础系列-SpringCache使用</a></p>
 ]]></content>
       <categories>
-        <category>-[工具,缓存]</category>
+        <category>工具</category>
+        <category>缓存</category>
       </categories>
       <tags>
-        <tag>-SpringBoot -缓存</tag>
+        <tag>SpringBoot</tag>
+        <tag>缓存</tag>
       </tags>
   </entry>
 </search>
