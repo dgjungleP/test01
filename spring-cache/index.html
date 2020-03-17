@@ -1040,14 +1040,15 @@ setInterval("createtime()",250);
         guest_info:guest,
         pageSize:'10' || 10,
     });
-  </script>
-$(document).ready(function(){
+	$(document).ready(function(){
 	$('.vemoji-btn').text('😀');
 	$("#comments").on('click', 'span.vat',function(){
 		$(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
 		$('textarea#veditor').focus();
 	})
-})
+	})
+  </script>
+
 
 
 
