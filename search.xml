@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Java8流库学习（一）</title>
+    <url>/javaStream/</url>
+    <content><![CDATA[<h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>​        流操作是我们在java编程中处理中的一种常用手法，其主要给我们提供的是一种可以在比集合更高级别的上指定计算的数据试图。在流操作中遵循者“做什么而非怎么做”的原则。对于流的操作我们基本上是包含三个步骤：</p>
+<ol>
+<li>创建一个流。</li>
+<li>.指定将初始化流转换为其他流的中间操作，可能包含了多个步骤。</li>
+<li>应用终止操作，从而残生结果。这个操作会强制执行之前的惰性操作。从此以后这个流就再也不能被使用。</li>
+</ol>
+<p>​        在我们接触流之前我们先比较一下流操作与迭代操作的区别：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String sanguo = <span class="keyword">new</span> String(Files.readAllBytes(Paths.get(<span class="string">"sanguo.txt"</span>)), StandardCharsets.UTF_8);</span><br><span class="line"><span class="comment">//计算三国里面每一句超过五个字的段落有多少个</span></span><br><span class="line">List&lt;String&gt; words = Arrays.asList(sanguo.split(<span class="string">"[\\，\\。]"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//迭代方案</span></span><br><span class="line"><span class="keyword">long</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (String w : words) &#123;</span><br><span class="line">    <span class="keyword">if</span> (w.length() &gt; <span class="number">5</span>) count++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//流处理方案</span></span><br><span class="line"><span class="keyword">long</span> stremCount = words.stream()</span><br><span class="line">        .filter(w -&gt; w.length() &gt; <span class="number">5</span>)</span><br><span class="line">        .count();</span><br></pre></td></tr></table></figure>
+
+<p>以上我们可以看到就这样一个小小的要求，就可以看出来流库的便利性，并且代码的可读性提升了不少，所以接下来我们一起来学习一下如何去创建一个流。</p>
+<h2 id="二、流的创建"><a href="#二、流的创建" class="headerlink" title="二、流的创建"></a>二、流的创建</h2><p>​        从上面的方法我们可以看到，流可以通过Collection接口的stream方法将任何的集合转换为一个流。但是当你有一个数组的时候，那么就需要利用静态方法Stream.of方法来创建一个数组的流。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Stream&lt;String&gt; words = Stream.of(sanguo.split(<span class="string">"[，。]"</span>));</span><br></pre></td></tr></table></figure>
+
+<p>当然由于Stream.of方法有用一个可变长参数，所以我们也可以香气中传入任意数量引元的流，</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Stream&lt;String&gt; words = Stream.of(<span class="string">"hello"</span>,<span class="string">"my"</span>,<span class="string">"name"</span>,<span class="string">"is"</span>,<span class="string">"jungle"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>当然关于数据的创建我们也可以选择数组中自己需要的部分作为引元，利用Array.stream(after,from,of)也可以创建这样的一个流。</p>
+<p>也可以创建一个不包含任何元素的空流利用Stream.empty方法。</p>
+<p>创建流的方法有很多中，其中还包括了无无线流，具体Api可以参考Java8手册</p>
+<h2 id="三、流的转化"><a href="#三、流的转化" class="headerlink" title="三、流的转化"></a>三、流的转化</h2><p>​        当我们创建好自己所需要的流之后，我们将对流进行一系列的操作，也就是将原有的流转化为其他形式的流。例如我们上面说到的中过滤操作</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Stream&lt;String&gt; words = words.stream().filter(w -&gt; w.length() &gt; <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这些列操作包括map、fileter、flatMap。他们可以将你的原有流进行转化，例如一下操作</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Stream&lt;String&gt; stringStream = words.stream().map(String::toUpperCase);</span><br><span class="line">Stream&lt;String&gt; stringStream = words.stream().flatmap(String::toUpperCase);</span><br></pre></td></tr></table></figure>
+
+<p>其中flatmap是将流运算过程中所有的元素链接在一起，无论怎么转化都只会得到一个流，例如将以下数组扁平化为一个一维数组，则我们就需要使用到flatmap</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String[][] chars = &#123;&#123;<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>&#125;, &#123;<span class="string">"a"</span>, <span class="string">"v"</span>, <span class="string">"e"</span>&#125;, &#123;<span class="string">"c"</span>, <span class="string">"a"</span>, <span class="string">"c"</span>&#125;&#125;;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>工具</category>
+        <category>学习</category>
+        <category>java</category>
+        <category>流操作</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>lambda</tag>
+        <tag>流操作</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring-Cache的使用说明</title>
     <url>/spring-cache/</url>
     <content><![CDATA[<h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>SpringCache本身是一个缓存体系的抽象实现，并没有具体的缓存能力，要使用SpringCache还需要配合具体的缓存实现来完成。</p>

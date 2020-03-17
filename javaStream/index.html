@@ -140,7 +140,7 @@
 
 
 
-  <title>16's houese</title>
+  <title>Java8流库学习（一） | 16's houese</title>
   
 
 
@@ -159,8 +159,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -297,9 +296,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -329,9 +328,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/javaStream/" itemprop="url">Java8流库学习（一）</a></h2>
+          <h2 class="post-title" itemprop="name headline">Java8流库学习（一）</h2>
         
 
         <div class="post-meta">
@@ -436,6 +433,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -482,21 +484,35 @@
       
 
       
-        
-          
-          一、概述​        流操作是我们在java编程中处理中的一种常用手法，其主要给我们提供的是一种可以在比集合更高级别的上指定计算的数据试图。在流操作中遵循者“做什么而非怎么做”的原则。对于流的操作我们基本上是包含三个步骤：
+        <h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>​        流操作是我们在java编程中处理中的一种常用手法，其主要给我们提供的是一种可以在比集合更高级别的上指定计算的数据试图。在流操作中遵循者“做什么而非怎么做”的原则。对于流的操作我们基本上是包含三个步骤：</p>
+<ol>
+<li>创建一个流。</li>
+<li>.指定将初始化流转换为其他流的中间操作，可能包含了多个步骤。</li>
+<li>应用终止操作，从而残生结果。这个操作会强制执行之前的惰性操作。从此以后这个流就再也不能被使用。</li>
+</ol>
+<p>​        在我们接触流之前我们先比较一下流操作与迭代操作的区别：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">String sanguo = <span class="keyword">new</span> String(Files.readAllBytes(Paths.get(<span class="string">"sanguo.txt"</span>)), StandardCharsets.UTF_8);</span><br><span class="line"><span class="comment">//计算三国里面每一句超过五个字的段落有多少个</span></span><br><span class="line">List&lt;String&gt; words = Arrays.asList(sanguo.split(<span class="string">"[\\，\\。]"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//迭代方案</span></span><br><span class="line"><span class="keyword">long</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (String w : words) &#123;</span><br><span class="line">    <span class="keyword">if</span> (w.length() &gt; <span class="number">5</span>) count++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//流处理方案</span></span><br><span class="line"><span class="keyword">long</span> stremCount = words.stream()</span><br><span class="line">        .filter(w -&gt; w.length() &gt; <span class="number">5</span>)</span><br><span class="line">        .count();</span><br></pre></td></tr></table></figure>
 
-创建一个流。
-.指定将初始化流转换为其他流的中间操作，可能包含了多个步
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/javaStream/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+<p>以上我们可以看到就这样一个小小的要求，就可以看出来流库的便利性，并且代码的可读性提升了不少，所以接下来我们一起来学习一下如何去创建一个流。</p>
+<h2 id="二、流的创建"><a href="#二、流的创建" class="headerlink" title="二、流的创建"></a>二、流的创建</h2><p>​        从上面的方法我们可以看到，流可以通过Collection接口的stream方法将任何的集合转换为一个流。但是当你有一个数组的时候，那么就需要利用静态方法Stream.of方法来创建一个数组的流。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; words = Stream.of(sanguo.split(<span class="string">"[，。]"</span>));</span><br></pre></td></tr></table></figure>
+
+<p>当然由于Stream.of方法有用一个可变长参数，所以我们也可以香气中传入任意数量引元的流，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; words = Stream.of(<span class="string">"hello"</span>,<span class="string">"my"</span>,<span class="string">"name"</span>,<span class="string">"is"</span>,<span class="string">"jungle"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>当然关于数据的创建我们也可以选择数组中自己需要的部分作为引元，利用Array.stream(after,from,of)也可以创建这样的一个流。</p>
+<p>也可以创建一个不包含任何元素的空流利用Stream.empty方法。</p>
+<p>创建流的方法有很多中，其中还包括了无无线流，具体Api可以参考Java8手册</p>
+<h2 id="三、流的转化"><a href="#三、流的转化" class="headerlink" title="三、流的转化"></a>三、流的转化</h2><p>​        当我们创建好自己所需要的流之后，我们将对流进行一系列的操作，也就是将原有的流转化为其他形式的流。例如我们上面说到的中过滤操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; words = words.stream().filter(w -&gt; w.length() &gt; <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这些列操作包括map、fileter、flatMap。他们可以将你的原有流进行转化，例如一下操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; stringStream = words.stream().map(String::toUpperCase);</span><br><span class="line">Stream&lt;String&gt; stringStream = words.stream().flatmap(String::toUpperCase);</span><br></pre></td></tr></table></figure>
+
+<p>其中flatmap是将流运算过程中所有的元素链接在一起，无论怎么转化都只会得到一个流，例如将以下数组扁平化为一个一维数组，则我们就需要使用到flatmap</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String[][] chars = &#123;&#123;<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>&#125;, &#123;<span class="string">"a"</span>, <span class="string">"v"</span>, <span class="string">"e"</span>&#125;, &#123;<span class="string">"c"</span>, <span class="string">"a"</span>, <span class="string">"c"</span>&#125;&#125;;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
     
@@ -506,225 +522,89 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>在这里捐献猫粮哦！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/custom/wx.jpg" alt="Jungle Deng 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/custom/ali.jpg" alt="Jungle Deng 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://abc.16home.top/spring-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Jungle Deng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/16pg.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="16's houese">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/spring-cache/" itemprop="url">Spring-Cache的使用说明</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-16T21:16:05+08:00">2020-03-16</time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-16T21:30:28+08:00">2020-03-16</time>
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/%E7%BC%93%E5%AD%98/" itemprop="url" rel="index">
-                    <span itemprop="name">缓存</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/java/" rel="tag"># java</a>
           
-
+            <a href="/tags/lambda/" rel="tag"># lambda</a>
           
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/spring-cache/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/spring-cache/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
+            <a href="/tags/%E6%B5%81%E6%93%8D%E4%BD%9C/" rel="tag"># 流操作</a>
           
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">38k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">35 mins.</span>
-              
-            </div>
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
       
 
       
+      
+        <div class="post-widgets">
+        
+
+        
+
         
           
-          一、概述SpringCache本身是一个缓存体系的抽象实现，并没有具体的缓存能力，要使用SpringCache还需要配合具体的缓存实现来完成。
-虽然如此，但是SpringCache是所有Spring支持的缓存结构的基础，而且所有的缓存的使用最后都要归结于SpringCache，那么一来，要想使用Sp
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/spring-cache/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
           </div>
-          <!--/noindex-->
         
+        </div>
       
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
       
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/spring-cache/" rel="next" title="Spring-Cache的使用说明">
+                <i class="fa fa-chevron-left"></i> Spring-Cache的使用说明
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -734,10 +614,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -745,6 +626,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -767,8 +655,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -890,6 +787,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、概述"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、流的创建"><span class="nav-number">2.</span> <span class="nav-text">二、流的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、流的转化"><span class="nav-number">3.</span> <span class="nav-text">三、流的转化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1068,6 +981,10 @@ setInterval("createtime()",250);
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
 
   
 
