@@ -705,6 +705,13 @@ setInterval("createtime()",250);
 
   <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
   <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  $(document).ready(function(){
+	$('.vemoji-btn').text('😀');
+	$("#vcomments").on('click', 'span.vat',function(){
+		$(this).parent('div.vmeta').next("div.vcontent").after($("div.vwrap"));
+		$('textarea#veditor').focus();
+	})
+})
   
   <script type="text/javascript">
     var GUEST = ['nick','mail','link'];
