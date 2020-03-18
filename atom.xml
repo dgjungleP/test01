@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://abc.16home.top/"/>
-  <updated>2020-03-18T02:19:46.252Z</updated>
+  <updated>2020-03-18T15:08:00.718Z</updated>
   <id>http://abc.16home.top/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java8流库学习（二）</title>
+    <link href="http://abc.16home.top/javaStream2/"/>
+    <id>http://abc.16home.top/javaStream2/</id>
+    <published>2020-03-18T13:16:26.000Z</published>
+    <updated>2020-03-18T15:08:00.718Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一、抽取子流和连接流"><a href="#一、抽取子流和连接流" class="headerlink" title="一、抽取子流和连接流"></a>一、抽取子流和连接流</h2><p>​        在知道了如何创建流和如何转化流之后，我们还可以在流转化或者是创建流的时候抽取其子流，例如stream的limit方法和skip方法</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//取前100个元素 generate方法用于生成一个无限流</span></span><br><span class="line">Stream&lt;Double&gt; limit = Stream.generate(Math::random).limit(<span class="number">100</span>);</span><br><span class="line"><span class="comment">//跳过前面10个元素</span></span><br><span class="line">Stream&lt;String&gt; skip = Stream.of(sanguo.split(<span class="string">"[，。]"</span>)).skip(<span class="number">10</span>);</span><br></pre></td></tr></table></figure><p>​        当然除了可以抽取其子流以外，我们还可以将两个流连接在一起，这就需要用到Stream的静态方法concat，不过使用该方法的时候需要注意一点，第一个流不能够是无限流，不然第二个流永远都不会被处理</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//连接两个流</span></span><br><span class="line">Stream&lt;String&gt; concat = Stream.concat(skip, skip);</span><br></pre></td></tr></table></figure><h2 id="二、其他形式的流转化"><a href="#二、其他形式的流转化" class="headerlink" title="二、其他形式的流转化"></a>二、其他形式的流转化</h2><p>​        除了以上的这几种流的转化形式以外，流还有一些特殊的转化形式。例如我们常用的去重转化，就会用到我们的distinct方法。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; distinct = Stream.of(<span class="string">"hello"</span>, <span class="string">"my"</span>, <span class="string">"name"</span>, <span class="string">"name"</span>, <span class="string">"is"</span>, <span class="string">"my"</span>, <span class="string">"jungle"</span>).distinct();</span><br><span class="line"><span class="comment">//最终获得的流["hello", "my", "name", "is", "jungle"]</span></span><br></pre></td></tr></table></figure><hr><p>​        <!--在此特别声明一下，对流的转化不会对原有的流产生任何的影响，只是会生成一个新的流对象。所以在我们对流进行操作的时候并不会改变原有的对象。--></p><hr><p>​        当然除了去重转化，我们常用的还有排序sorted方法，以及还有一个方便于方法调试的peek操作。sorted方法有多种变体可以用，其中一种是用于操作Comparable元素的流，另一种是可以接受一个Comparator。例如</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将流中的字符串按照长度进行倒序排序</span></span><br><span class="line">Stream&lt;String&gt; sorted = words.stream().sorted(Comparator.comparing(String::length).reversed());</span><br></pre></td></tr></table></figure><p>peek方法会产生一个与原来的元素一致的，并且在每一次调用一个元素的时候都会触发peek方法，从而执行peek方法中过的函数，利用这个方法也可以用来验证无限流的懒加载机制。</p><h2 id="三、简单约简"><a href="#三、简单约简" class="headerlink" title="三、简单约简"></a>三、简单约简</h2><p>​        从上面我们了解到了如何取创建流和转化流，那么现在我们应该需要知道，如何取获取流的结果，也就是流的约简。这是一种终结操作，直接将流约简为我们可以在程序中使用的非流值。</p><p>​        之前我们用过的约简方法有：count计数方法。现在我们又将会了解到另外的集中方法：max根据规则取最大值；min根据规则取最小值；finFirst查找第一个匹配的元素；findAny查找任何一个匹配的元素，这些方法都会获取一个Optional<T>的值，下一次我们再来讲这个值如何取处理。findFirst和findAny方法都是用于filter方法的铲鲟，当然如果只是关注于匹配度的话，那么我们就可以用anyMatch、allMatch和noneMatch方法，他们的返回值是boolean类型，并且不需要和filter组合，还能够通过并行运行获取效率。后面我们也会学到并行流的相关知识。</T></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//max方法</span></span><br><span class="line">Optional&lt;String&gt; max = Stream.of(<span class="string">"hello"</span>, <span class="string">"my"</span>, <span class="string">"name"</span>, <span class="string">"is"</span>, <span class="string">"jungle"</span>).distinct().max(String::compareTo);</span><br><span class="line"><span class="comment">//min方法</span></span><br><span class="line">Optional&lt;String&gt; min = Stream.of(<span class="string">"hello"</span>, <span class="string">"my"</span>, <span class="string">"name"</span>, <span class="string">"is"</span>, <span class="string">"jungle"</span>).distinct().min(String::compareTo);</span><br><span class="line"><span class="comment">//findFirst方法</span></span><br><span class="line">Optional&lt;String&gt; first = Stream.of(<span class="string">"hello"</span>, <span class="string">"my"</span>, <span class="string">"name"</span>, <span class="string">"is"</span>, <span class="string">"jungle"</span>).filter(s -&gt; s.startsWith(<span class="string">"h"</span>)).findFirst();</span><br><span class="line"><span class="comment">//findAny方法</span></span><br><span class="line">Optional&lt;String&gt; any = Stream.of(<span class="string">"hello"</span>, <span class="string">"my"</span>, <span class="string">"name"</span>, <span class="string">"is"</span>, <span class="string">"jungle"</span>).filter(s -&gt; s.startsWith(<span class="string">"h"</span>)).findAny();</span><br><span class="line"><span class="comment">//anyMacth方法</span></span><br><span class="line"><span class="keyword">boolean</span> b = Stream.of(<span class="string">"hello"</span>, <span class="string">"my"</span>, <span class="string">"name"</span>, <span class="string">"is"</span>, <span class="string">"jungle"</span>).parallel().anyMatch(s -&gt; s.startsWith(<span class="string">"h"</span>));</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;一、抽取子流和连接流&quot;&gt;&lt;a href=&quot;#一、抽取子流和连接流&quot; class=&quot;headerlink&quot; title=&quot;一、抽取子流和连接流&quot;&gt;&lt;/a&gt;一、抽取子流和连接流&lt;/h2&gt;&lt;p&gt;​        在知道了如何创建流和如何转化流之后，我们还可以在流转化或者
+      
+    
+    </summary>
+    
+    
+      <category term="工具" scheme="http://abc.16home.top/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="学习" scheme="http://abc.16home.top/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="java" scheme="http://abc.16home.top/categories/%E5%AD%A6%E4%B9%A0/java/"/>
+    
+      <category term="流操作" scheme="http://abc.16home.top/categories/%E5%B7%A5%E5%85%B7/%E6%B5%81%E6%93%8D%E4%BD%9C/"/>
+    
+    
+      <category term="java" scheme="http://abc.16home.top/tags/java/"/>
+    
+      <category term="lambda" scheme="http://abc.16home.top/tags/lambda/"/>
+    
+      <category term="流操作" scheme="http://abc.16home.top/tags/%E6%B5%81%E6%93%8D%E4%BD%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>Java8流库学习（一）</title>
