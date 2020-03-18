@@ -354,7 +354,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-03-18T00:19:18+08:00">2020-03-18</time>
+              <time title="更新于" itemprop="dateModified" datetime="2020-03-18T10:19:46+08:00">2020-03-18</time>
             
           </span>
 
@@ -502,7 +502,7 @@
 
 <p>当然关于数据的创建我们也可以选择数组中自己需要的部分作为引元，利用Array.stream(after,from,of)也可以创建这样的一个流。</p>
 <p>也可以创建一个不包含任何元素的空流利用Stream.empty方法。</p>
-<p>创建流的方法有很多中，其中还包括了无无线流，具体Api可以参考Java8手册</p>
+<p>创建流的方法有很多中，其中还包括了无限流的创建，具体Api可以参考Java8手册</p>
 <h2 id="三、流的转化"><a href="#三、流的转化" class="headerlink" title="三、流的转化"></a>三、流的转化</h2><p>​        当我们创建好自己所需要的流之后，我们将对流进行一系列的操作，也就是将原有的流转化为其他形式的流。例如我们上面说到的中过滤操作</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; words = words.stream().filter(w -&gt; w.length() &gt; <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
 
